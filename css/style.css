@@ -1,12 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600&family=Press+Start+2P&display=swap");
 
 * {
   box-sizing: border-box;
+  /* font-family: , cursive; */
 }
 
 body {
   margin: 140px 0 0 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Press Start 2P", sans-serif;
+  font-size: 10px;
 }
 
 h1,
@@ -17,6 +20,12 @@ h5,
 h6,
 p {
   margin-top: 0;
+}
+
+* h1 {
+  font-family: "Press Start 2P", cursive;
+  font-size: 80px;
+  text-align: center;
 }
 
 img {
@@ -37,11 +46,16 @@ img {
   margin-top: 3rem;
   margin-bottom: 3rem;
   justify-content: center;
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   left: 0;
   width: 100%;
 }
+/* .sratbattle {
+  width: 80px;
+  height: 40px;
+  background-color: #4c8837;
+} */
 
 .searchbar input {
   width: 100%;

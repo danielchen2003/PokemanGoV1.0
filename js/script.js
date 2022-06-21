@@ -1,16 +1,25 @@
-const search = document.querySelector('.search');
-const random = document.querySelector('.random');
-const input = document.querySelector('input');
-const cards = document.querySelector('.cards');
+const search = document.querySelector(".search");
+const random = document.querySelector(".random");
+const input = document.querySelector("input");
+const cards = document.querySelector(".cards");
 
-function generateRandomNumber(min = 0, max = 10, options = { round: false, place: null }) {
-  if (min > max) throw new Error('min cannot be greater than max');
+//字体  摇骰子  进化  背景图  开场 动画   结束 动画   选饲养员 背景音乐  action 选项 撤退 和暴击  攻击动画和防守动画 输入时候把进化卡放到卡槽内
+//战斗结束 报幕 血槽显示 ，经验显示， 进化动画显示 有一个选择开始战斗选项，  最好有一个地方显示哪张卡战斗
+//战斗人员有2个人选择 一半一半 另一半会黑白
+//选人战斗，进入选pokeman， 点击选中， 开始战斗， 动画， 显示经验，升级，战斗结束，动画 撤退选项
+
+function generateRandomNumber(
+  min = 0,
+  max = 10,
+  options = { round: false, place: null }
+) {
+  if (min > max) throw new Error("min cannot be greater than max");
 
   let randomNum = Math.random() * (max - min) + min;
   const { round, place } = options;
 
-  if (round && typeof place === 'number') {
-    if (options.place > 20) throw new Error('Place must be between 0 & 20');
+  if (round && typeof place === "number") {
+    if (options.place > 20) throw new Error("Place must be between 0 & 20");
     randomNum = +randomNum.toFixed(options.place);
   }
   return randomNum;
@@ -26,7 +35,7 @@ function getPokemonAttributes(data) {
   const spdef = data.stats[4].base_stat;
   const spd = data.stats[5].base_stat;
   const type1 = data.types[0].type.name;
-  const image = data.sprites.other['official-artwork'].front_default;
+  const image = data.sprites.other["official-artwork"].front_default;
   let type2 = null;
   let ability = null;
   const moves = [];
@@ -47,7 +56,6 @@ function getPokemonAttributes(data) {
   // will not allow duplicate moves
   // else add all the moves
   if (data.moves.length > 4) {
-
     while (moves.length < 4) {
       const max = data.moves.length - 1;
       const random = generateRandomNumber(0, max, { round: true, place: 0 });
@@ -55,7 +63,6 @@ function getPokemonAttributes(data) {
 
       if (!moves.includes(move)) moves.push(move);
     }
-
   } else {
     for (let i = 0; i < data.moves.length; i++) {
       const { move } = data.moves[i];
@@ -64,30 +71,82 @@ function getPokemonAttributes(data) {
   }
 
   return {
-    height, name, weight, hp, atk, def, spatk, spdef, spd, type1, type2, image, ability, moves
+    height,
+    name,
+    weight,
+    hp,
+    atk,
+    def,
+    spatk,
+    spdef,
+    spd,
+    type1,
+    type2,
+    image,
+    ability,
+    moves,
   };
 }
 
 function capitalize(str) {
-  if (str.length === 0 || typeof str !== 'string') return str;
+  if (str.length === 0 || typeof str !== "string") return str;
 
   return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
-
 }
 
 function formatWord(str) {
-  if (typeof str !== 'string') return str;
+  if (typeof str !== "string") return str;
 
-  return str.split('-')
-    .map(word => capitalize(word))
-    .join(' ');
+  return str
+    .split("-")
+    .map((word) => capitalize(word))
+    .join(" ");
+}
+
+//i want export this variable later to second page
+let selectedPokemanName;
+
+function addOnClick() {
+  const pickPokeman = document.querySelectorAll("article");
+
+  for (let i = 0; i < pickPokeman.length; i++) {
+    pickPokeman[i].addEventListener("click", function (event) {
+      // pickPokeman.forEach((card) => {
+      //   card.classList.add("Selected");
+      console.log(11);
+      // pickPokeman[i].remove();
+      //打印名字
+      selectedPokemanName = pickPokeman[i].textContent
+        .trim()
+        .split(/\s+/)[0]
+        .toLowerCase();
+
+      console.log(selectedPokemanName);
+    });
+  }
 }
 
 function generatePokemonHTML(attributes) {
-  const moves = attributes.moves.map(move => {
-    return `<div class="pokemon__move">${formatWord(move)}</div>`;
-  }).join("");
-  const { type1, type2, name, image, ability, hp, atk, def, spdef, spatk, spd, weight, height } = attributes;
+  const moves = attributes.moves
+    .map((move) => {
+      return `<div class="pokemon__move">${formatWord(move)}</div>`;
+    })
+    .join("");
+  const {
+    type1,
+    type2,
+    name,
+    image,
+    ability,
+    hp,
+    atk,
+    def,
+    spdef,
+    spatk,
+    spd,
+    weight,
+    height,
+  } = attributes;
   const multiType = `${formatWord(type1)} / ${formatWord(type2)}`;
   const types = !type2 ? formatWord(type1) : multiType;
 
@@ -160,27 +219,66 @@ function renderCard(data, root) {
   root.innerHTML += html;
 }
 
-search.addEventListener('click', async () => {
+search.addEventListener("click", async () => {
   try {
     const query = input.value.toLowerCase();
-    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${query}`);
+    const { data } = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${query}`
+    );
     console.log(data);
     renderCard(data, cards);
 
+    //=====================add click
+    addOnClick();
   } catch (error) {
     console.log(error.response);
   }
 });
 
-random.addEventListener('click', async () => {
+random.addEventListener("click", async () => {
   try {
     // 913 - 1
     const randomId = generateRandomNumber(0, 912, { round: true, place: 0 });
-    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+    const { data } = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${randomId}`
+    );
     renderCard(data, cards);
+    //=====================add click
+    addOnClick();
   } catch (error) {
     console.log(error);
   }
 });
 
+// //add css to Selected Card
 
+// const duck2 = document.querySelectorAll(".duck");
+// for (let i = 0; i < duck2.length; i++) {
+//   duck2[i].addEventListener("click", function boom(event) {
+//     console.log(1);
+//     duck2[i].remove();
+//     duck2[i].classList.add("shot");
+//     // setInterval(function () {
+//     //   document.body.removeChild(duck);
+//     // }, 1000);
+//   });
+// }
+
+var buttonReady = document.querySelector(".Ready");
+
+buttonReady.addEventListener("click", function () {
+  sessionStorage.setItem("selectedPokemanName", selectedPokemanName);
+  document.location.href = "./page2.html";
+});
+
+//modul2
+
+// import { electedPokemanName } from "./script.js";
+
+//================
+// sessionStorage.setItem("choosedPokeman", "Shrek");
+
+// This goes in the second web page:
+// Retrieve the sessionStorage variable
+// var choosedPokeman = sessionStorage.getItem("choosedPokeman");
+// var choosedPokeman = selectedPokemanName;
