@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="./css/page2.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Pokeman Game</title>
+  </head>
+  <body>
+    <div class="head">
+      <header>
+        <h1 class="bigheader">Pokeman Go</h1>
+        <!-- <div class="imageDiv randomDiv"></div> -->
+      </header>
+    </div>
+
+    <main>
+      <div id="cardborad">
+        <!-- <div class = playercontainer0> -->
+        <div class="player player--0 player--active">
+          <h2 class="name" id="name--0">Player 1</h2>
+          <img class="logo" src="./dice/pokemonlogo.png" alt="logo" />
+          <img class="dice--0" src="./dice/dice-1.png" alt="Playing dice" />
+          <img class="dice--1" src="./dice/dice-3.png" alt="Playing dice" />
+          <img class="dice--2" src="./dice/dice-5.png" alt="Playing dice" />
+          <div class="pokemancard pokemancard--0"></div>
+          <div class="currentHealth">
+            <!-- <p class="current-label">Current</p>
+            <p class="current-score" id="current--0">0</p> -->
+          </div>
+        </div>
+        <!-- <div class = playercontainer1> -->
+        <div class="player player--1">
+          <h2 class="name" id="name--1">Player 2</h2>
+          <div class="pokemancard pokemancard--1"></div>
+          <div class="currentHealth">
+            <!-- <p class="current-label">Current</p>
+            <p class="current-score" id="current--1">0</p> -->
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn--roll">🎲 Roll dice</button>
+      <button class="btn btn--hold">📥 Hold</button>
+    </main>
+    <div class="endingPic">
+      <img class="endingimg" src="./img/Lostimg.png" alt="" />
+    </div>
+    <script type="module" src="./js/page2.js"></script>
+    <script type="module" defer src="./js/script.js"></script>
+  </body>
+</html>
