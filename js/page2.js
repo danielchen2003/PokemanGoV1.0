@@ -221,13 +221,17 @@ function getPokemonAttributes(data) {
             .name
         )
       );
-      setTimeout(console.log(y), 3000);
+      // let y =
+      //   evlutionOfthePokeman.data.chain.evolves_to[0].evolves_to[0].species
+      //     .name;
+
+      console.log(y);
     } catch (error) {
       console.log(error);
     }
     //已经可以打印出来leiqiu了 !y 那么没变化
   };
-  // callspecies(species);
+  callspecies(species);
 
   let type2 = null;
   let ability = null;
@@ -408,44 +412,44 @@ function fightRound(attacker, defender, dice) {
   console.log(dice);
   let attackValue = 0;
   if (dice === 18) {
-    attackValue = Math.round(Math.max(attacker[1] * 2.5 - defender[2], 100)); //can't make demage <0  capitalize(
+    attackValue = Math.round(Math.max(attacker[1] * 2.5 - defender[2], 3)); //can't make demage <0  capitalize(
     defender[0] = defender[0] - attackValue;
     console.log(defender[0]);
     pokemanAction.textContent += `${capitalize(
       attacker[4]
-    )} Hitting the vitals, generating critical attack (${attackValue} demage \n`;
+    )} Hitting the vitals, generating critical attack (${attackValue} demage `;
     console.log(
-      `${defender[4]} denfender: ${defender[0]} got demage ${attackValue}`
+      `${defender[4]} denfender: ${defender[0]} got demage ${attackValue} `
     );
   } else if (dice <= 6) {
-    attackValue = 10; //can't make demage <0  capitalize(
+    // attackValue = 10; //can't make demage <0  capitalize(
     defender[0] = defender[0] - attackValue;
     pokemanAction.textContent += `${capitalize(
       attacker[4]
     )} missed his attack Made 0 demage ${capitalize(
       attacker[4]
-    )} pretends nothing happened \n`;
+    )} pretends nothing happened <br>`;
     console.log(defender[0]);
     console.log(
       `${defender[4]} denfender: ${defender[0]} got demage ${attackValue}`
     );
   } else if (dice >= 7 && dice <= 12) {
+    attackValue = Math.round(Math.max(attacker[1] * 1.2 - defender[2], 3));
     defender[0] = defender[0] - attackValue;
-    attackValue = Math.round(Math.max(attacker[1] * 1.2 - defender[2], 100));
     pokemanAction.textContent += `${capitalize(
       attacker[4]
-    )} Made ${attackValue} demage to ${capitalize(defender[4])} \n`;
+    )} Made ${attackValue} demage to ${capitalize(defender[4])} `;
     console.log(
       `${defender[4]} denfender: ${defender[0]} got demage ${attackValue}`
     );
     console.log(defender[0]);
   } else {
-    attackValue = Math.round(Math.max(attacker[1] * 1.5 - defender[2], 100));
+    attackValue = Math.round(Math.max(attacker[1] * 1.5 - defender[2], 3));
     defender[0] = defender[0] - attackValue;
 
     pokemanAction.textContent += `${capitalize(
       attacker[4]
-    )} Made ${attackValue} demage to ${capitalize(defender[4])} \n`;
+    )} Made ${attackValue} demage to ${capitalize(defender[4])} `;
     console.log(
       `${defender[4]} denfender: ${defender[0]} got demage ${attackValue}`
     );
