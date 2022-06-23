@@ -4,6 +4,11 @@
 //卡片攻击动画 和防守动画， 卡片颜色补上  第一页加入选中提示和 选中动画
 var selectedPokemanName = sessionStorage.getItem("selectedPokemanName");
 console.log(selectedPokemanName);
+//卡牌加3种特效， 第一种 翻转 进化
+//第二种 移动 包括暴击
+//第三种shaking 防守
+//掉血 不要有延迟， 去掉计时器 ，  roll 加一个cooldown 正在实现
+//进化， 颜色补完
 
 // console.log(selectedPokemanName);
 const play01El = document.querySelector(".player--0");
@@ -83,6 +88,7 @@ const initiInterFace = async () => {
   isWinner = false;
   isPlaying = true;
   hpreset();
+
   // btnNext.disabled = true;
   pokemanData = [];
   try {
@@ -113,12 +119,13 @@ const initiInterFace = async () => {
 };
 initiInterFace();
 
-const swichPlayer = function () {
+function swichPlayer() {
   play01El.classList.toggle("player--active");
+  // console.log("player--active");
   play02El.classList.toggle("player--active");
-};
-// current2 = 0;
+}
 
+// current2 = 0;
 // btnHold.addEventListener("click", function () {
 //   if (playing) {
 //     score[activePlayer] += currentScore;
@@ -142,6 +149,20 @@ const swichPlayer = function () {
 
 //===============================================import from script1
 // insertPlayercard;
+//
+// if (!neighbour) return;
+
+// // AJAX call country 2
+// const request2 = new XMLHttpRequest();
+// request2.open('GET', `https://restcountries.eu/rest/v2/alpha/${neighbour}`);
+// request2.send();
+
+// request2.addEventListener('load', function () {
+//   const data2 = JSON.parse(this.responseText);
+//   console.log(data2);
+
+//   renderCountry(data2, 'neighbour');
+// });
 
 function generateRandomNumber(
   min = 0,
@@ -173,10 +194,41 @@ function getPokemonAttributes(data) {
   const spd = data.stats[5].base_stat;
   const type1 = data.types[0].type.name;
   const image = data.sprites.other["official-artwork"].front_default;
+  // get evolutiondata
+  const species = data.species.url;
+  console.log(`${species} this is species`);
+
+  const callspecies = async (species) => {
+    const speciesData = await axios.get(`${species}`);
+
+    // console.log("success");
+    // console.log(
+    //   JSON.stringify(speciesData.data.evolution_chain.url),
+    //   `this is speciesdata`
+    // );
+
+    // let x = JSON.parse(JSON.stringify(speciesData.data.evolution_chain.url));
+    // console.log(x, "testingJSON");
+
+    const evolutionChian = speciesData.data.evolution_chain.url;
+    console.log(`${evolutionChian}: this is evolutionChian`);
+    const evlutionOfthePokeman = await axios.get(`${evolutionChian}`);
+
+    let y = JSON.parse(
+      JSON.stringify(
+        evlutionOfthePokeman.data.chain.evolves_to[0].evolves_to[0].species.name
+      )
+    );
+    setTimeout(console.log(y), 1000);
+
+    //已经可以打印出来leiqiu了 !y 那么没变化
+  };
+  callspecies(species);
+
   let type2 = null;
   let ability = null;
   const moves = [];
-  pokemanData.push([hp * 3, atk, def, spd, name, hp * 3]);
+  pokemanData.push([hp, atk, def, spd, name, hp]);
   // totalHP.push(hp);
 
   // sets type2 if one is available
@@ -333,6 +385,7 @@ function generatePokemonHTML(attributes) {
 
 function renderCard(data, root) {
   const attributes = getPokemonAttributes(data);
+  console.log(`${data} this is data`);
   const html = generatePokemonHTML(attributes);
   root.innerHTML = html;
 }
@@ -344,36 +397,59 @@ function renderCard(data, root) {
 //  13-17  1.5
 //每一场战斗的结果
 // function checkRoundresult() {}
-
+const pokemanAction = document.querySelector(".pokemanActions");
 function fightRound(attacker, defender, dice) {
   // if (dice > 18 || dice < 3) return error;
+  let attackValue = 0;
   if (dice >= 18) {
-    defender[0] -= Math.max(attacker[1] * 2.5 - defender[2], 25); //can't make demage <0
-    console.log(
-      `${attacker[4]} Hitting the vitals, generating critical demage(${
-        attacker[1] * 1.8
-      })`
-    );
+    attackValue = Math.round(Math.max(attacker[1] * 2.5 - defender[2], 1)); //can't make demage <0  capitalize(
+    defender[0] -= attackValue;
+    pokemanAction.textContent += `${capitalize(
+      attacker[4]
+    )} Hitting the vitals, generating critical attack (${attackValue} demage \n`;
+    console.log(defender[0]);
   } else if (dice <= 6) {
-    console.log(`${attacker[4]} missed his attack Made 0 demage`);
+    pokemanAction.textContent += `${capitalize(
+      attacker[4]
+    )} missed his attack Made 0 demage ${capitalize(
+      attacker[4]
+    )} pretends nothing happened \n`;
   } else if (dice >= 7 && dice <= 12) {
-    defender[0] -= Math.max(attacker[1] * 0.8 - defender[2], 10);
-    console.log(`${attacker[4]}  Made ${attacker[1] * 0.8} demage`);
+    defender[0] -= attackValue;
+    attackValue = Math.round(Math.max(attacker[1] * 0.8 - defender[2], 1));
+    pokemanAction.textContent += `${capitalize(
+      attacker[4]
+    )} Made ${attackValue} demage to ${capitalize(defender[4])} \n`;
+    console.log(defender[0]);
   } else {
-    defender[0] -= Math.max(attacker[1] * 1.1 - defender[2], 15);
-    console.log(`${attacker[4]}  Made ${attacker[1] * 1.1}demage`);
+    attackValue = Math.round(Math.max(attacker[1] * 1.1 - defender[2], 1));
+    defender[0] -= attackValue;
+
+    pokemanAction.textContent += `${capitalize(
+      attacker[4]
+    )} Made ${attackValue} demage to ${capitalize(defender[4])} \n`;
+    console.log(defender[0]);
   }
 }
 
 //一开始有hidden
 function rolldice() {
-  const diceNumber__00 = generateRandomNumber(1, 6, { round: true, place: 0 });
+  const diceNumber__00 = generateRandomNumber(1, 6, {
+    round: true,
+    place: 0,
+  });
   // dice00.img.classList.remove("hidden");
   dice00.src = `./dice/dice-${diceNumber__00}.png`;
-  const diceNumber__01 = generateRandomNumber(1, 6, { round: true, place: 0 });
+  const diceNumber__01 = generateRandomNumber(1, 6, {
+    round: true,
+    place: 0,
+  });
   // dice01.img.classList.remove("hidden");
   dice01.src = `./dice/dice-${diceNumber__01}.png`;
-  const diceNumber__02 = generateRandomNumber(1, 6, { round: true, place: 0 });
+  const diceNumber__02 = generateRandomNumber(1, 6, {
+    round: true,
+    place: 0,
+  });
   // dice02.img.classList.remove("hidden");
   dice02.src = `./dice/dice-${diceNumber__02}.png`;
   let diceresult = diceNumber__00 + diceNumber__01 + diceNumber__02;
@@ -409,7 +485,9 @@ function battleWinnerCheck(player1, AIplayer) {
   if (player1[0] <= 0 || AIplayer[0] <= 0) {
     if (player1[0] > AIplayer[0]) {
       console.log(
-        `Winner of this Game is Player1 and his Pokeman + ${player1[4]}}`
+        `Winner of this Game is Player1 and his Pokeman +  ${capitalize(
+          player1[4]
+        )}}`
       );
       isPlaying = false;
       isWinner = true;
@@ -418,11 +496,14 @@ function battleWinnerCheck(player1, AIplayer) {
       // setTimeout(loadLosePic(), 1000);
     } else {
       console.log(
-        `Winner of this Game is AIplayer and his Pokeman:" + ${AIplayer[4]}`
+        `Winner of this Game is AIplayer and his Pokeman:" + ${capitalize(
+          AIplayer[4]
+        )}`
       );
       isPlaying = false;
-      setTimeout(loadLosePic(endingimg), 1000);
       isWinner = false;
+      setTimeout(loadLosePic(endingimg), 1000);
+
       hiddenDice(true);
     }
   }
@@ -439,68 +520,110 @@ const wait = function (seconds) {
 // })
 // ;
 // let totalHealthOfAIPlayer;
+// function addCDRollBtn(isPlaying) {
+//   isPlaying = false;
+//   setTimeout((isPlaying = true), 3000);
+// }
+function player01Round() {
+  const [player1, AIPlyaer] = pokemanData;
+  let diceResult = rolldice();
+  moveCard01.classList.remove("attackerCard--01");
+  moveLeftCard();
 
+  console.log("move1");
+  setTimeout(() => console.log("step1"), shakingCard(moveCard02), 500);
+  console.log("step2");
+  // await wait(3);
+
+  fightRound(player1, AIPlyaer, diceResult);
+  hpBar(AIPlyaer, hp02);
+  setTimeout(swichPlayer, 1400);
+  console.log("step3");
+  console.log(`player1: ${player1}`);
+  console.log(`player2: ${AIPlyaer}`);
+}
+
+function player02Round() {
+  const [player1, AIPlyaer] = pokemanData;
+  let diceResult = rolldice();
+  moveRightCard();
+  setTimeout(shakingCard(moveCard01), 500);
+  fightRound(AIPlyaer, player1, diceResult);
+
+  hpBar(player1, hp01);
+  setTimeout(swichPlayer, 1400);
+
+  console.log(`player1: ${player1}`);
+  console.log(`player2: ${AIPlyaer}`);
+}
+
+let btncooldown = true;
 btnRoll.addEventListener("click", async () => {
+  pokemanAction.textContent = "";
   if (isPlaying) {
-    try {
-      const [player1, AIPlyaer] = pokemanData;
-      console.log(player1, AIPlyaer);
-      if (player1[0] > 0 || AIPlyaer[0] > 0) {
-        if (player1[3] >= AIPlyaer[3]) {
-          //check who's spd faster
-          hiddenDice(false);
-          swichPlayer();
-          let diceResult = rolldice();
+    if (btncooldown) {
+      btncooldown = false; // add cd to btnRoll qestion??? 1st
+      // console.log(isPlaying);
+      setTimeout(() => (btncooldown = true), 4000);
+      try {
+        const [player1, AIPlyaer] = pokemanData;
+        console.log(player1, AIPlyaer);
+        if (player1[0] > 0 || AIPlyaer[0] > 0) {
+          if (player1[3] >= AIPlyaer[3]) {
+            //check who's spd faster
+            hiddenDice(false);
+            player01Round();
+            // swichPlayer();
 
-          await wait(1);
+            // setTimeout(1000);
 
-          fightRound(player1, AIPlyaer, diceResult);
-          hpBar(AIPlyaer, hp02);
+            await wait(3);
+            player02Round();
 
-          //当前血量/ 总血量 防守方血量变化
-          swichPlayer();
-          diceResult = rolldice();
-          swichPlayer();
-          setTimeout(fightRound(AIPlyaer, player1, diceResult), 1000);
-          hpBar(player1, hp01);
-          console.log(player1);
-          console.log(AIPlyaer);
+            //1 骰子并显示
+            //2 攻击 防守特效
+            //3 攻击回合处理数据
+            //4.显示血量
+            //5. 交换玩家
+            //当前血量/ 总血量 防守方血量变化
+            // setTimeout(() => alert("It's turn to player2"), 1900);
 
-          //  防守方血量变化 hpBar(AIPlyaer[0], totalHealthOfAIPlayer, hp01);
-        } else {
-          swichPlayer();
-          let diceResult = rolldice();
-          setTimeout(fightRound(AIPlyaer, player1, diceResult), 1000);
-          hpBar(player1, hp01);
+            //  防守方血量变化 hpBar(AIPlyaer[0], totalHealthOfAIPlayer, hp01);
+          } else {
+            swichPlayer();
+            hiddenDice(false);
 
-          swichPlayer();
-          diceResult = rolldice();
-          setTimeout(fightRound(player1, AIPlyaer, diceResult), 1000);
-          hpBar(AIPlyaer, hp02);
-          console.log(player1);
-          console.log(AIPlyaer);
+            player02Round();
+            // swichPlayer();
+
+            // setTimeout(1000);
+            await wait(3);
+
+            player01Round();
+          }
         }
-      }
-      battleWinnerCheck(player1, AIPlyaer);
-      // btnNext.disabled = true;
 
-      // player1[0] > AIPlyaer[0] ?
-    } catch (err) {
-      console.error(err);
+        battleWinnerCheck(player1, AIPlyaer);
+
+        // btnNext.disabled = true;
+
+        // player1[0] > AIPlyaer[0] ?
+      } catch (err) {
+        console.error(err);
+      }
+      // if (playing) {
+      //   let diceNumber = Math.trunc(Math.random() * 6) + 1;
+      //   diceEl.classList.remove("hidden");
+      //   diceEl.src = `./dice/dice-${diceNumber}.png`;
+      //   if (diceNumber !== 1) {
+      //     currentScore += diceNumber;
+      //     // current01El.textContent = currentscore;
+      //     // console.log(activePlayer);
+      //     document.getElementById(`current--${activePlayer}`).textContent =
+      //       currentScore;
+      //   } else {
+      //     ;
     }
-    // if (playing) {
-    //   let diceNumber = Math.trunc(Math.random() * 6) + 1;
-    //   diceEl.classList.remove("hidden");
-    //   diceEl.src = `./dice/dice-${diceNumber}.png`;
-    //   if (diceNumber !== 1) {
-    //     currentScore += diceNumber;
-    //     // current01El.textContent = currentscore;
-    //     // console.log(activePlayer);
-    //     document.getElementById(`current--${activePlayer}`).textContent =
-    //       currentScore;
-    //   } else {
-    //     ;
-    //   }
   }
 });
 // const hpDelay = document.getElementById("delay");
@@ -545,3 +668,29 @@ btnNext.addEventListener("click", async function nextgame() {
     }
   }
 });
+
+const moveCard01 = document.querySelector(".pokemancard--0");
+const moveCard02 = document.querySelector(".pokemancard--1");
+// const shakingCard = document.querySelector(".defendershaking");
+
+moveCard01.addEventListener("click", moveLeftCard);
+moveCard02.addEventListener("click", moveRightCard);
+
+function moveLeftCard() {
+  moveCard01.classList.toggle("attackerCard--01");
+  setTimeout(() => moveCard01.classList.remove("attackerCard--01"), 660);
+}
+
+function moveRightCard() {
+  moveCard02.classList.toggle("attackerCard--02");
+  setTimeout(() => moveCard02.classList.remove("attackerCard--02"), 660);
+}
+
+function shakingCard(carddiv) {
+  carddiv.classList.add("defendershaking");
+  setTimeout(() => carddiv.classList.remove("defendershaking"), 660);
+}
+
+// function evolutionsystem(){
+
+// }

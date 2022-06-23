@@ -225,6 +225,7 @@ search.addEventListener("click", async () => {
     const { data } = await axios.get(
       `https://pokeapi.co/api/v2/pokemon/${query}`
     );
+
     console.log(data);
     renderCard(data, cards);
 
