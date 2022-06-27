@@ -19,7 +19,7 @@ Once you selected pokeman and click on the card will shake, and click Start Game
 #### About Dice Rolling
 Every time the dice are rolled, they appear, otherwise they will disappear. before Game start and over it will keep hidden.
 In order to see the full animation I added a 3-second cooldown to roll dice.
-![Roll](/img/pic9.png)
+![Roll](/img/pic7.png)
 
 	
 #### The background color of Acitive Player is light green
@@ -34,7 +34,7 @@ After you win or lose the game you can click the Next Game Button to restart thi
 
 #### About Exp and Evolution system
 One you reach 100 exp and win the battle you are able to evolute to the next level pokeman.
-![evolution3](/img/pic7.png)
+![evolution3](/img/pic9.png)
 ![evolution4](/img/pic8.png)
 ![evolution1](/img/pic5.png)
 ![evolution2](/img/pic6.png)
