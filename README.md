@@ -23,8 +23,8 @@ In order to see the full animation I added a 3-second cooldown to roll dice.
 
 	
 #### The background color of Acitive Player is light green
-![activeplauer](/img/pic2.png)
 The background color wil swap after each turn
+![activeplauer](/img/pic2.png)
 
 #### About delay
 I add light delay easy for people to watch the game and observe wait for the attack aimation
