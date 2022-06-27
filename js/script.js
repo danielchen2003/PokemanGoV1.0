@@ -111,17 +111,16 @@ function addOnClick() {
 
   for (let i = 0; i < pickPokeman.length; i++) {
     pickPokeman[i].addEventListener("click", function (event) {
-      // pickPokeman.forEach((card) => {
-      //   card.classList.add("Selected");
-      console.log(11);
-      // pickPokeman[i].remove();
+      pickPokeman[i].classList.add("shaking");
+
+      setTimeout(() => pickPokeman[i].classList.remove("shaking"), 660);
       //打印名字
       selectedPokemanName = pickPokeman[i].textContent
         .trim()
         .split(/\s+/)[0]
         .toLowerCase();
 
-      console.log(selectedPokemanName);
+      // console.log(selectedPokemanName);
     });
   }
 }
