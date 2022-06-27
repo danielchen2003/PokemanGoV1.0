@@ -5,7 +5,7 @@ I made this game base on the pokeman API project working with my classmate Domin
 ## Step 1 Choose your faverate pokeman
 
 click ready for battle and click roll start battle.Once you selected pokeman it will shake, and click Start Game to Battle 
-![Happy Christmas](/img/pic1)
+![Happy Christmas](/img/pic1.png)
 
 
 第一个选人 ，选中人后会shaking  转到第二页 用local 内存
