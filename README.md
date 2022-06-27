@@ -16,8 +16,9 @@ Once you selected pokeman and click on the card will shake, and click Start Game
  If  dice =18   then cirtical attack of 2.5 demage.
  The actural demage will calculate the opponent's defensive ability.
  
-#### About dice
+#### About Dice Rolling
 Every time the dice are rolled, they appear, otherwise they will disappear. before Game start and over it will keep hidden.
+In order to see the full animation I added a 3-second cooldown to roll dice.
 
 	
 #### The background color of Acitive Player is light green
@@ -30,23 +31,23 @@ I add light delay easy for people to watch the game and observe wait for the att
 #### Next Game button
 After you win or lose the game you can click the Next Game Button to restart this game with same pokeman. If you decided to change a pokeman, then you have to go back to first page and choose pokeman again.
 
-#### About exp
+#### About Exp and Evolution system
 One you reach 100 exp and win the battle you are able to evolute to the next level pokeman.
 ![evolution1](/img/pic5.png)
 ![evolution2](/img/pic6.png)
+
 #### Healthbar
 Health bar 
-Healthbar。是动态的展示血量， 加了一个delay 效果更好看 The effect looks better
+Healthbar is a dynamic display of blood levels, with the addition of a delay function, The effect looks better.
 
-每当你打赢了比赛并且 经验超过100就可以进化到下一个等级
-5 ，7  10以下
+
 进化系统我取得数据比较麻烦，因为不是直接可以拿到的数据
 我先找到选中pokeman的Species 的url
 Axios fetch data 找到evolution chian in species obj
 再找到属性Evlution to 找到target
 Iniilization里面替换选中的pokeman
 
-为了完整看到动画我给roll dice 加了一个3秒冷却
+
 输了我加了一个过场动画
 输了可以用next game restart
 赢了并且有100经验的话就可以进化下一个level
