@@ -33,6 +33,8 @@ After you win or lose the game you can click the Next Game Button to restart thi
 
 #### About Exp and Evolution system
 One you reach 100 exp and win the battle you are able to evolute to the next level pokeman.
+![evolution3](/img/pic7.png)
+![evolution4](/img/pic9.png)
 ![evolution1](/img/pic5.png)
 ![evolution2](/img/pic6.png)
 
