@@ -1,6 +1,7 @@
 # PokemanGoV1.3
 
 I made this game base on the pokeman API project working with my classmate 	**Dominik** togather. I improve it through indtroduce Dice and Battle system individually in Per scholor four months Fulltime high intensive computer Science BootCamp. Have fun Engjoy this game.!
+ The game link on github pages is : https://danielchen2003.github.io/PokemanGoV1.0/
 
 ## Step 1 Choose your faverate pokeman
 
