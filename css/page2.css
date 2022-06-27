@@ -266,6 +266,17 @@ main {
   top: 64rem;
 }
 
+.btn--evolution {
+  top: 64.3rem;
+  left: 276px;
+}
+.exp {
+  font-size: 1.8rem;
+  position: absolute;
+  padding: 0.7rem 2.5rem;
+  top: 77.7rem;
+  left: 70px;
+}
 .btn:active {
   transform: translate(-50%, 3px);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
