@@ -1,6 +1,6 @@
 # PokemanGoV1.3
 
-I made this game base on the pokeman API project working with my classmate Dominik togather. I improve it through indtroduce Dice and Battle system individually in Per scholor four months Fulltime high intensive computer Science BootCamp. Have fun Engjoy this game.!
+I made this game base on the pokeman API project working with my classmate 	** Dominik ** togather. I improve it through indtroduce Dice and Battle system individually in Per scholor four months Fulltime high intensive computer Science BootCamp. Have fun Engjoy this game.!
 
 ## Step 1 Choose your faverate pokeman
 
@@ -33,28 +33,17 @@ I add light delay easy for people to watch the game and observe wait for the att
 After you win or lose the game you can click the Next Game Button to restart this game with same pokeman. If you decided to change a pokeman, then you have to go back to first page and choose pokeman again.
 
 #### About Exp and Evolution system
-One you reach 100 exp and win the battle you are able to evolute to the next level pokeman.
+One you reach *100 exp* and win the battle you are able to evolute to the next level pokeman.
+I got the evolution data from Species URL and got the evolution chain in species data. and finally got proerty of the evoluteTo. 
+
 ![evolution3](/img/pic9.png)
 ![evolution4](/img/pic8.png)
 ![evolution1](/img/pic5.png)
 ![evolution2](/img/pic6.png)
 
 #### Healthbar
-Health bar 
 Healthbar is a dynamic display of blood levels, with the addition of a delay function, The effect looks better.
+![healthbar](/img/pic4.png)
 
-
-进化系统我取得数据比较麻烦，因为不是直接可以拿到的数据
-我先找到选中pokeman的Species 的url
-Axios fetch data 找到evolution chian in species obj
-再找到属性Evlution to 找到target
-Iniilization里面替换选中的pokeman
-
-
-输了我加了一个过场动画
-输了可以用next game restart
-赢了并且有100经验的话就可以进化下一个level
-
-结束以后不能继续战斗因为加入了一个isplaying check
-![image](https://user-images.githubusercontent.com/104922779/175843218-7cccbe85-befe-4f49-b6e5-f0cf728bb4fa.png)
-
+#### About Api
+I got my Data from https://pokeapi.co/  Thanks for support.
