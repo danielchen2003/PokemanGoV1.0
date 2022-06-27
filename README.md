@@ -4,22 +4,38 @@ I made this game base on the pokeman API project working with my classmate Domin
 
 ## Step 1 Choose your faverate pokeman
 
-click ready for battle and click roll start battle.Once you selected pokeman it will shake, and click Start Game to Battle 
-![Happy Christmas](/img/pic1.png)
+Once you selected pokeman and click on the card will shake, and click Start Game to Battle 
+![Choose](/img/pic1.png)
 
+转到第二页 用local 内存
+## Step 2 Battle Start
+ Cick Roll dice to begin, attack sequence depends on speed, the faster one attack first. 
+ If  dice < 6 then miss the attack. 
+ If  7 < dice < 12 then  generate 1.2 * demage . 
+ If  13 dice < 17 then generate 1.5 demage.
+ If  dice =18   then cirtical attack of 2.5 demage.
+ The actural demage will calculate the opponent's defensive ability.
+ 
+#### About dice
+Every time the dice are rolled, they appear, otherwise they will disappear. before Game start and over it will keep hidden.
 
-第一个选人 ，选中人后会shaking  转到第二页 用local 内存
-
-战斗顺序，谁的速度快 谁优先攻击
-如果骰子 dice 戴斯<= 6   miss the attack 7 -12  1.2 demage 13- 17  1.5 demage dice ===18  2.5 demage
 	
-每次投掷骰子 就会出现，不然就消失
-背景绿色会跳动 随着active player swap（）  indicate  who’s turn it is now
-我加一个 dealy easy for people to watch the game and observe wait for the attack aimation
-Next Game 开始一个新游戏无论你输赢都可以开始新比赛
-如果要重选人就要返回第一页
-经验打败一个敌人就有100exp
-超过100exp就可以进化到下个level
+#### The background color of Acitive Player is light green
+![activeplauer](/img/pic2.png)
+The background color wil swap after each turn
+
+#### About delay
+I add light delay easy for people to watch the game and observe wait for the attack aimation
+
+#### Next Game button
+After you win or lose the game you can click the Next Game Button to restart this game with same pokeman. If you decided to change a pokeman, then you have to go back to first page and choose pokeman again.
+
+#### About exp
+One you reach 100 exp and win the battle you are able to evolute to the next level pokeman.
+![evolution1](/img/pic5.png)
+![evolution2](/img/pic6.png)
+#### Healthbar
+Health bar 
 Healthbar。是动态的展示血量， 加了一个delay 效果更好看 The effect looks better
 
 每当你打赢了比赛并且 经验超过100就可以进化到下一个等级
