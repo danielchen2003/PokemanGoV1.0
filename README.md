@@ -7,7 +7,7 @@ I made this game base on the pokeman API project working with my classmate 	** D
 Once you selected pokeman and click on the card will shake, and click Start Game to Battle 
 ![Choose](/img/pic1.png)
 
-转到第二页 用local 内存
+
 ## Step 2 Battle Start
  Cick Roll dice to begin, attack sequence depends on speed, the faster one attack first. 
  If  dice < 6 then miss the attack. 
